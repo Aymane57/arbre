@@ -26,11 +26,6 @@ if (isset($_POST['code']) && trim($_POST['code']) && isset($_POST['parent'])) {
     dao::addObject($_POST['parent'], $_POST['code']);
 }
 
-function getmicrotime() {
-    list($usec, $sec) = explode(" ", microtime());
-    return ((float) $usec + (float) $sec);
-}
-
 $objects = dao::getAllObjects(); # Pour la liste déroulante, on récupére tous les objets
 ?>
 <!DOCTYPE html>
@@ -41,13 +36,13 @@ $objects = dao::getAllObjects(); # Pour la liste déroulante, on récupére tous
     </head>
     <body>
         <?php
-        $begin = getmicrotime();
+        $begin = microtime(true);
 
         getChilds(-1);
         # On appelle la fonction d'affichage à partir de la racine
         # J'ai préféré -1 à NULL pour éviter IS NULL coté SQL (un if en moins, toujours ça de gagné)
 
-        $time = getmicrotime() - $begin;
+        $time = microtime(true) - $begin;
         ?>
 
         <form action="index.php" method="POST">
