@@ -37,6 +37,7 @@ if (isDataValid()) {
         } else {
             do {
                 $id_parent = $arrayOfAllIds[rand(0, count($arrayOfAllIds) - 1)][0];
+                # On génére un parent parmi ceux qui sont disponibles
             } while (!dao::idExist($id_parent));
 
             if (rand(1, 20) == 1) {
@@ -46,7 +47,11 @@ if (isDataValid()) {
         }
 
         $arrayOfAllIds[] = $id_parent;
+        # On ajout celui qu'on vient de générer dans le tableau d'éventuel parents
+        # Ca évite de le rechercher dans la base
+
         dao::addObject($id_parent, $code);
+        # On ajout à la base
     }
 }
 
