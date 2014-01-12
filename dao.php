@@ -43,6 +43,22 @@ class dao {
         return $objects;
     }
 
+    static function getAllIds() {
+
+        $db = connect::getInstance();
+        $query = $db->prepare('SELECT id
+            FROM objects');
+
+        $query->execute();
+
+        $arrayOfIds = $query->fetchAll(PDO::FETCH_NUM);
+
+        $query->closeCursor();
+        $db = NULL;
+
+        return $arrayOfIds;
+    }
+
     static function addObject($id_parent, $code) {
 
         $db = connect::getInstance();

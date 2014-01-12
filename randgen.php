@@ -26,15 +26,17 @@ function isDataValid() {
 }
 
 if (isDataValid()) {
+
     for ($i = 0; $i < (int) $_POST['count']; $i++) {
         $letters = ('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
         $code = substr(str_shuffle($letters), 0, rand(3, 8));
+        $arrayOfAllIds = dao::getAllIds();
 
-        if (!dao::getMaxId()) {
+        if (!$arrayOfAllIds) {
             $id_parent = -1;
         } else {
             do {
-                $id_parent = rand(0, dao::getMaxId());
+                $id_parent = $arrayOfAllIds[rand(0, count($arrayOfAllIds) - 1)][0];
             } while (!dao::idExist($id_parent));
 
             if (rand(1, 20) == 1) {
@@ -43,8 +45,7 @@ if (isDataValid()) {
             }
         }
 
-
-
+        $arrayOfAllIds[] = $id_parent;
         dao::addObject($id_parent, $code);
     }
 }
